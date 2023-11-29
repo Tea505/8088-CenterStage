@@ -78,6 +78,4 @@ public class FieldCentricMain {
         telemetry.addData("rightFront power", robot.rightFront.getCurrentPosition());
         telemetry.addData("rightRear power", robot.rightRear.getCurrentPosition());
     }
-
-
 }
