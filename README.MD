@@ -12,7 +12,7 @@ Official code for Team 8088 The Cephalopods for CenterStage written by Tea
 
 If you are an Android Studio programmer, there are several ways to download this repo.  Note that if you use the Blocks or OnBot Java Tool to program your robot, then you do not need to download this repository.
 
-1. Download or clone this repo with `git clone https://github.com/Tea505/9384-CenterStage.git`.
+1. Download or clone this repo with `git clone https://github.com/Tea505/8088-CenterStage.git`.
 
 2. Open the project in Android Studio and build `TeamCode` like any other `ftc_app` project.
 
