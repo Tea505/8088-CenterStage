@@ -34,7 +34,7 @@ public class TensorFlow {
 
         // TODO: Change Custom Model for these guys
         // Define custom Model
-        myTfodProcessorBuilder.setModelFileName("Red_Prop.tflite");
+        // myTfodProcessorBuilder.setModelFileName("Red_Prop.tflite");
 
         // Set the full ordered list of labels the model is trained to recognize
         myTfodProcessorBuilder.setModelLabels(JavaUtil.createListWith("Team Prop", null));
@@ -57,6 +57,7 @@ public class TensorFlow {
 
     public int telemetryDisplay(Telemetry telemetry) {
         List<Recognition> myTfodRecognitions;
+        // default location is right == 3
         int scan_loc = 3;
         Recognition myTfodRecognition;
         float x;

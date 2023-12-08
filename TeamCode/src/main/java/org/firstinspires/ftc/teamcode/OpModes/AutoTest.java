@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Hardware.TensorFlow;
 
-@Autonomous
+@Autonomous (name = "TensorFlow test Java")
 public class AutoTest extends LinearOpMode {
 
     TensorFlow tensorFlow;
