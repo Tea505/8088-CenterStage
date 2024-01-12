@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Hardware.Arm;
 import org.firstinspires.ftc.teamcode.Hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.Hardware.Intake;
+import org.firstinspires.ftc.teamcode.Hardware.Lift;
 import org.firstinspires.ftc.teamcode.Hardware.Wrist;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
@@ -15,6 +16,7 @@ public class TeleOp extends LinearOpMode {
 
     public Arm arm = new Arm(this);
     public Wrist wrist = new Wrist(this);
+    public Lift lift = new Lift(this);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -22,6 +24,7 @@ public class TeleOp extends LinearOpMode {
         intake.initialize(hardwareMap);
         arm.initialize(hardwareMap);
         wrist.initialize(hardwareMap);
+        lift.initialize(hardwareMap);
 
         waitForStart();
         if (opModeIsActive()) {
@@ -30,6 +33,7 @@ public class TeleOp extends LinearOpMode {
                 intake.loop(gamepad1);
                 arm.loop(gamepad1);
                 wrist.loop(gamepad1);
+                lift.loop(gamepad2);
             }
         }
     }
