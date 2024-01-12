@@ -12,6 +12,8 @@ public class Arm extends Contraption {
 
     private Servo Arm;
 
+    public static double ARM_UP = 0.9;
+    public static double ARM_DOWN = 0;
     public Arm(LinearOpMode opMode) {
         this.opMode = opMode;
     }
@@ -27,10 +29,12 @@ public class Arm extends Contraption {
     public void loop(Gamepad gamepad) {
         if (gamepad.a) {
             // up
-            Arm.setPosition(.9);
+            // Arm.setPosition(.9);
+            Arm.setPosition(ARM_UP);
         } else if (gamepad.b) {
             // down
-            Arm.setPosition(0);
+            // Arm.setPosition(0);
+            Arm.setPosition(ARM_DOWN);
         }
     }
 }
