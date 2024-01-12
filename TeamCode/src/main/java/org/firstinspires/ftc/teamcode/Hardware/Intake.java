@@ -24,15 +24,11 @@ public class Intake extends Contraption {
 
         RightClaw.setDirection(Servo.Direction.REVERSE);
         LeftClaw.setDirection(Servo.Direction.REVERSE);
-        RightClaw.setPosition(.66);
-        LeftClaw.setPosition(.38);
-
-
     }
     public void loop(Gamepad gamepad){
         if (gamepad.left_bumper) {
             // open
-            LeftClaw.setPosition(0);
+            LeftClaw.setPosition(0.5);
         } else if (gamepad.left_trigger > 0) {
             // close
             LeftClaw.setPosition(.38);
@@ -40,7 +36,7 @@ public class Intake extends Contraption {
         // right claw
         if (gamepad.right_bumper) {
             // open
-            RightClaw.setPosition(0);
+            RightClaw.setPosition(0.56);
         } else if (gamepad.right_trigger > 0) {
             // close
             RightClaw.setPosition(.66);
