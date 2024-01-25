@@ -12,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.teamcode.LibraryFiles.Constants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -21,7 +20,7 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 @Autonomous
-public class automus extends LinearOpMode {
+public class RedBack extends LinearOpMode {
 
     public VisionPortal myVisionPortal;
     public TfodProcessor myTfodProcessor;
@@ -130,24 +129,41 @@ public class automus extends LinearOpMode {
                     .setConstraints(MaxVel, MaxAccel)
 
                     .forward(29)
+                    //open one claw here
                     .waitSeconds(2)
                     // need refining
                     .back(4)
-                    .turn(Math.toRadians(-90))
+                    .turn(Math.toRadians(90))
                     .forward(62)
-                    //.turn(Math.toRadians(180)
-                    //don't know if there robot can score from the back
                     .waitSeconds(2)
-                    .strafeLeft(20)
+                    .strafeRight(20)
                     .build();
 
             TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
                     .setConstraints(MaxVel, MaxAccel)
 
                     .forward(29)
+                    .turn(Math.toRadians(90))
+                    //open one claw here
+                    .waitSeconds(2)
+                    .back(62)
+                    //score thingy here
+                    .strafeRight(22)
                     .build();
 
             TrajectorySequence Right = drive.trajectorySequenceBuilder(startPose)
+                    .setConstraints(MaxVel, MaxAccel)
+
+                    .forward(29)
+                    .turn(Math.toRadians(-90))
+                    //open one Claw here
+                    .waitSeconds(2)
+                    .back(5)
+                    .strafeRight(15)
+                    //Going to do spline on actual field for auccarcy
+                    .forward(62)
+                    .strafeLeft(8)
+                    //scoring thingy
                     .build();
 
                 if (side == CENTER) {

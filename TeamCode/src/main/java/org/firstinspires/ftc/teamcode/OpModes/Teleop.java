@@ -18,7 +18,7 @@ public class Teleop extends LinearOpMode {
     private Intake intake = new Intake(this);
     private Arm arm = new Arm(this);
     private Wrist wrist = new Wrist(this);
-    private Climber climber = new Climber(this)
+    private Climber climber = new Climber(this);
     @Override
     public void runOpMode(){
         drivetrain.initialize(hardwareMap);
