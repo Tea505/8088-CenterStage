@@ -12,7 +12,7 @@ public class Arm extends Contraption {
 
     private Servo Arm;
 
-    public static double ARM_UP = 0.9;
+    public static double ARM_UP = 1;
     public static double ARM_DOWN = 0;
     public Arm(LinearOpMode opMode) {
         this.opMode = opMode;
