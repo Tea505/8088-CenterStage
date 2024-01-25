@@ -142,7 +142,9 @@ public class automus extends LinearOpMode {
                     .build();
 
             TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
+                    .setConstraints(MaxVel, MaxAccel)
 
+                    .forward(29)
                     .build();
 
             TrajectorySequence Right = drive.trajectorySequenceBuilder(startPose)

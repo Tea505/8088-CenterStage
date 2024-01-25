@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -20,43 +22,28 @@ public class Intake extends Contraption {
     public static double RIGHTCLAW_CLOSE_POS = 0.66;
     public static double RIGHTCLAW_OPEN_POS = 0.56;
 
-    public Intake(LinearOpMode opMode){
-        this.opMode=opMode;
+    public Intake(LinearOpMode opMode) {
+        this.opMode = opMode;
     }
+
     @Override
     public void initialize(HardwareMap hwMap) {
 
         LeftClaw = hwMap.get(Servo.class, "LeftClaw");
         RightClaw = hwMap.get(Servo.class, "RightClaw");
 
-        RightClaw.setDirection(Servo.Direction.REVERSE);
-        LeftClaw.setDirection(Servo.Direction.REVERSE);
+    }
 
-        ClawInit();
-    }
-    public void loop(Gamepad gamepad){
-        if (gamepad.left_bumper) {
-            // open
-            // LeftClaw.setPosition(0.5);
-            LeftClaw.setPosition(LEFTCLAW_OPEN_POS);
-        } else if (gamepad.left_trigger > 0) {
+    public void loop(Gamepad gamepad) {
+        if (gamepad2.left_trigger > 0) {
             // close
-            // LeftClaw.setPosition(.38);
-            LeftClaw.setPosition(LEFTCLAW_CLOSE_POS);
+            LeftClaw.setPosition(0.7);
+            RightClaw.setPosition(0.3);
         }
-        // right claw
-        if (gamepad.right_bumper) {
+        if (gamepad2.right_trigger > 0) {
             // open
-            // RightClaw.setPosition(0.56);
-            RightClaw.setPosition(RIGHTCLAW_OPEN_POS);
-        } else if (gamepad.right_trigger > 0) {
-            // close
-            // RightClaw.setPosition(.66);
-            RightClaw.setPosition(RIGHTCLAW_CLOSE_POS);
+            LeftClaw.setPosition(0.5);
+            RightClaw.setPosition(0.5);
         }
-    }
-    public void ClawInit() {
-        LeftClaw.setPosition(LEFTCLAW_CLOSE_POS);
-        RightClaw.setPosition(RIGHTCLAW_CLOSE_POS);
     }
 }

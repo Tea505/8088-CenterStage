@@ -10,31 +10,30 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.LibraryFiles.Contraption;
-
 @Config
-public class Lift extends Contraption {
-    DcMotor LeftLift, RightLift;
-    public Lift(LinearOpMode opMode) {
+public class Climber extends Contraption {
+    DcMotor LeftClimber, RightClimber;
+
+    public Climber(LinearOpMode opMode) {
         this.opMode = opMode;
     }
+
     @Override
     public void initialize(HardwareMap hwMap) {
-        RightLift = hwMap.get(DcMotorEx.class, "rightArm");
-        LeftLift = hwMap.get(DcMotorEx.class, "leftArm");
+        RightClimber = hwMap.get(DcMotorEx.class, "rightArm");
+        LeftClimber = hwMap.get(DcMotorEx.class, "leftArm");
     }
 
     public void loop(Gamepad gamepad) {
-        if (gamepad2.left_stick_y < 0) {
-            // up
-            LeftLift.setPower(1);
-            RightLift.setPower(1);
-        } else if (gamepad2.left_stick_y > 0) {
-            // down
-            LeftLift.setPower(-1);
-            RightLift.setPower(-1);
+        if (gamepad2.dpad_up) {
+            LeftClimber.setPower(1);
+            RightClimber.setPower(1);
+        } else if (gamepad2.dpad_down) {
+            LeftClimber.setPower(-1);
+            RightClimber.setPower(-1);
         } else {
-            LeftLift.setPower(0);
-            RightLift.setPower(0);
+            LeftClimber.setPower(0);
+            RightClimber.setPower(0);
         }
     }
 }
