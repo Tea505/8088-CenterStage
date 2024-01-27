@@ -19,16 +19,22 @@ public class Lift extends Contraption {
     }
     @Override
     public void initialize(HardwareMap hwMap) {
-        RightLift = hwMap.get(DcMotorEx.class, "rightArm");
-        LeftLift = hwMap.get(DcMotorEx.class, "leftArm");
+        RightLift = hwMap.get(DcMotorEx.class, "RightLift");
+        LeftLift = hwMap.get(DcMotorEx.class, "LeftLift");
+
+        RightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LeftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        RightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LeftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void loop(Gamepad gamepad) {
-        if (gamepad2.left_stick_y < 0) {
+        if (gamepad.left_stick_y < 0) {
             // up
             LeftLift.setPower(1);
             RightLift.setPower(1);
-        } else if (gamepad2.left_stick_y > 0) {
+        } else if (gamepad.left_stick_y > 0) {
             // down
             LeftLift.setPower(-1);
             RightLift.setPower(-1);
@@ -36,5 +42,16 @@ public class Lift extends Contraption {
             LeftLift.setPower(0);
             RightLift.setPower(0);
         }
+    }
+
+    public void autoMove(int TargetPosition, double Power) {
+        RightLift.setTargetPosition(TargetPosition);
+        LeftLift.setTargetPosition(TargetPosition);
+
+        RightLift.setPower(Power);
+        LeftLift.setPower(Power);
+
+        LeftLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RightLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 }

@@ -15,29 +15,40 @@ public class Arm extends Contraption {
 
     private Servo LeftArm, RightArm;
 
-    public static double ARM_UP = 1;
-    public static double ARM_DOWN = 0;
+    public static double LeftARM_UP = 0;
+    public static double RightARM_UP = 0.7;
+    public static double LeftARM_DOWN = 0.7;
+    public static double RightARM_DOWM = 0;
+
     public Arm(LinearOpMode opMode) {
         this.opMode = opMode;
     }
 
     @Override
     public void initialize(HardwareMap hwMap) {
-
-        LeftArm = hardwareMap.get(Servo.class, "LeftArm");
-        RightArm = hardwareMap.get(Servo.class, "RightArm");
-
+        LeftArm = hwMap.get(Servo.class, "LeftArm");
+        RightArm = hwMap.get(Servo.class, "RightArm");
     }
 
     public void loop(Gamepad gamepad) {
-        if (gamepad2.left_bumper) {
+        if (gamepad.left_bumper) {
             // up
             LeftArm.setPosition(0);
             RightArm.setPosition(0.7);
-        } else if (gamepad2.right_bumper) {
+        } else if (gamepad.right_bumper) {
             // down
             LeftArm.setPosition(0.7);
             RightArm.setPosition(0);
         }
     }
+
+    public void armUp() {
+        LeftArm.setPosition(LeftARM_UP);
+        RightArm.setPosition(RightARM_UP);
+    }
+    public void armDown(){
+        LeftArm.setPosition(LeftARM_DOWN);
+        RightArm.setPosition(RightARM_DOWM);
+    }
+
 }

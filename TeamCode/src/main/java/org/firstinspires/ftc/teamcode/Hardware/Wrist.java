@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.LibraryFiles.Contraption;
 @Config
 public class Wrist extends Contraption {
 
-    private Servo Wrist;
+    private static Servo Wrist;
 
     public static double WRIST_UP = 0;
     public static double WRIST_DOWN = 0.8;
@@ -28,14 +28,21 @@ public class Wrist extends Contraption {
     }
 
     public void loop(Gamepad gamepad) {
-        if (gamepad2.x) {
+        if (gamepad.x) {
             // up
             Wrist.setPosition(WRIST_UP);
-        } else if (gamepad2.b) {
+        } else if (gamepad.b) {
             // down
             Wrist.setPosition(WRIST_DOWN);
-        } else if (gamepad1.dpad_left) {
-            Wrist.setPosition(0.5);
+        } else if (gamepad.dpad_left) {
+            Wrist.setPosition(0.15);
         }
     }
+    public static void WristUp() {
+        Wrist.setPosition(0);
+    }
+    public static void Wristdown(){
+        Wrist.setPosition(WRIST_DOWN);
+    }
+
 }

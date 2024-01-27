@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.Side.CENTER;
 import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.Side.LEFT;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
@@ -19,7 +20,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-
+@Autonomous
 public class BlueBack extends LinearOpMode {
 
     public VisionPortal myVisionPortal;
@@ -35,7 +36,64 @@ public class BlueBack extends LinearOpMode {
         USE_WEBCAM = true;
         initTfod();
 
+        drive = new SampleMecanumDrive(hardwareMap);
+
+        Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
+
+        drive.setPoseEstimate(startPose);
+        // these have not been tested they are just base line
+        TrajectorySequence Centered = drive.trajectorySequenceBuilder(startPose)
+                .setConstraints(MaxVel, MaxAccel)
+
+                .forward(29)
+                //open one claw here
+                .waitSeconds(2)
+                // need refining
+                .back(4)
+                .turn(Math.toRadians(-90))
+                .back(62)
+                //going at add spline later
+                .waitSeconds(2)
+                .strafeRight(20)
+                .build();
+
+        TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
+                .setConstraints(MaxVel, MaxAccel)
+
+                .forward(29)
+                .turn(Math.toRadians(-90))
+                //open one claw here
+                .waitSeconds(2)
+                .back(62)
+                //score thingy here
+                .strafeLeft(22)
+                .build();
+
+        TrajectorySequence Right = drive.trajectorySequenceBuilder(startPose)
+                .setConstraints(MaxVel, MaxAccel)
+
+                .forward(29)
+                .turn(Math.toRadians(-90))
+                //open one Claw here
+                .waitSeconds(2)
+                .back(5)
+                .strafeRight(15)
+                //Going to do spline on actual field for auccarcy
+                .back(62)
+                .strafeRight(8)
+                //scoring thingy
+                .build();
+
+
         while (!isStarted()) {
+            if (side == CENTER) {
+                drive.followTrajectorySequence(Centered);
+            } else if (side == LEFT) {
+                drive.followTrajectorySequence(Left);
+            } else {
+                drive.followTrajectorySequence(Right);
+
+            }
             proplocation = Tfod_location();
             telemetry.addData("location: ", proplocation);
             telemetry.update();
@@ -120,62 +178,9 @@ public class BlueBack extends LinearOpMode {
         // Create a VisionPortal by calling build.
         myVisionPortal = myVisionPortalBuilder.build();
 
-        drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
-
-        drive.setPoseEstimate(startPose);
         // these have not been tested they are just base line
-        TrajectorySequence Centered = drive.trajectorySequenceBuilder(startPose)
-                .setConstraints(MaxVel, MaxAccel)
 
-                .forward(29)
-                //open one claw here
-                .waitSeconds(2)
-                // need refining
-                .back(4)
-                .turn(Math.toRadians(-90))
-                .back(62)
-                //going at add spline later
-                .waitSeconds(2)
-                .strafeRight(20)
-                .build();
-
-        TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
-                .setConstraints(MaxVel, MaxAccel)
-
-                .forward(29)
-                .turn(Math.toRadians(-90))
-                //open one claw here
-                .waitSeconds(2)
-                .back(62)
-                //score thingy here
-                .strafeLeft(22)
-                .build();
-
-        TrajectorySequence Right = drive.trajectorySequenceBuilder(startPose)
-                .setConstraints(MaxVel, MaxAccel)
-
-                .forward(29)
-                .turn(Math.toRadians(-90))
-                //open one Claw here
-                .waitSeconds(2)
-                .back(5)
-                .strafeRight(15)
-                //Going to do spline on actual field for auccarcy
-                .back(62)
-                .strafeRight(8)
-                //scoring thingy
-                .build();
-
-        if (side == CENTER) {
-            drive.followTrajectorySequence(Centered);
-        } else if (side == LEFT) {
-            drive.followTrajectorySequence(Left);
-        } else {
-            drive.followTrajectorySequence(Right);
-
-        }
 
 
     }

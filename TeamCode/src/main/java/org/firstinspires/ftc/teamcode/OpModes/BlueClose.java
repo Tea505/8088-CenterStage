@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.Side.CENTER;
 import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.Side.LEFT;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
@@ -19,7 +20,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-
+@Autonomous
 public class BlueClose extends LinearOpMode {
 
     public VisionPortal myVisionPortal;
@@ -135,10 +136,10 @@ public class BlueClose extends LinearOpMode {
                 // need refining
                 .back(4)
                 .turn(Math.toRadians(90))
-                .forward(18)
+                .back(18)
                 //going at add spline later
                 .waitSeconds(2)
-                .strafeRight(20)
+                .strafeLeft(20)
                 .build();
 
         TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)

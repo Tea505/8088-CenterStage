@@ -166,14 +166,25 @@ public class RedBack extends LinearOpMode {
                     //scoring thingy
                     .build();
 
-                if (side == CENTER) {
+                /*if (side == CENTER) {
                     drive.followTrajectorySequence(Centered);
                 } else if (side == LEFT) {
                     drive.followTrajectorySequence(Left);
                 }else{
                     drive.followTrajectorySequence(Right);
 
-                }
+                }*/
+            waitForStart();
+            if (side == CENTER) {
+                drive.followTrajectorySequence(Centered);
+            } else if (side == LEFT) {
+                drive.followTrajectorySequence(Left);
+            }else{
+                drive.followTrajectorySequence(Right);
+
+            }
+
+
 
 
 

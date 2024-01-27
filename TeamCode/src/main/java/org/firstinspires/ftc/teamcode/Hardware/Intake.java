@@ -16,11 +16,11 @@ public class Intake extends Contraption {
     private Servo LeftClaw;
     private Servo RightClaw;
 
-    public static double LEFTCLAW_CLOSE_POS = 0.38;
+    public static double LEFTCLAW_CLOSE_POS = 0.7;
     public static double LEFTCLAW_OPEN_POS = 0.5;
 
-    public static double RIGHTCLAW_CLOSE_POS = 0.66;
-    public static double RIGHTCLAW_OPEN_POS = 0.56;
+    public static double RIGHTCLAW_CLOSE_POS = 0.3;
+    public static double RIGHTCLAW_OPEN_POS = 0.5;
 
     public Intake(LinearOpMode opMode) {
         this.opMode = opMode;
@@ -32,18 +32,34 @@ public class Intake extends Contraption {
         LeftClaw = hwMap.get(Servo.class, "LeftClaw");
         RightClaw = hwMap.get(Servo.class, "RightClaw");
 
+        LeftClaw.setPosition(LEFTCLAW_CLOSE_POS);
+        RightClaw.setPosition(RIGHTCLAW_CLOSE_POS);
+
     }
 
     public void loop(Gamepad gamepad) {
-        if (gamepad2.left_trigger > 0) {
+        if (gamepad.left_trigger > 0) {
             // close
             LeftClaw.setPosition(0.7);
             RightClaw.setPosition(0.3);
         }
-        if (gamepad2.right_trigger > 0) {
+        if (gamepad.right_trigger > 0) {
             // open
             LeftClaw.setPosition(0.5);
             RightClaw.setPosition(0.5);
         }
+    }
+
+    public void OpenLeft() {
+        LeftClaw.setPosition(LEFTCLAW_OPEN_POS);
+    }
+
+    public void OpenRight() {
+    RightClaw.setPosition(RIGHTCLAW_OPEN_POS);
+    }
+
+    public void OpenBoth() {
+        LeftClaw.setPosition(LEFTCLAW_OPEN_POS);
+        RightClaw.setPosition((RIGHTCLAW_OPEN_POS));
     }
 }
