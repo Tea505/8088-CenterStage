@@ -19,6 +19,7 @@ public class Teleop extends LinearOpMode {
     private Arm arm = new Arm(this);
     private Wrist wrist = new Wrist(this);
     private Climber climber = new Climber(this);
+     private Lift lift =new Lift(this);
     @Override
     public void runOpMode(){
         drivetrain.initialize(hardwareMap);
@@ -26,6 +27,8 @@ public class Teleop extends LinearOpMode {
         arm.initialize(hardwareMap);
         wrist.initialize(hardwareMap);
         climber.initialize(hardwareMap);
+        lift.initialize(hardwareMap);
+
 
         waitForStart();
         if (opModeIsActive()) {
@@ -35,6 +38,7 @@ public class Teleop extends LinearOpMode {
                 arm.loop(gamepad2);
                 wrist.loop(gamepad2);
                 climber.loop(gamepad2);
+                lift.loop(gamepad2);
             }
         }
     }

@@ -28,7 +28,7 @@ public class RedClose extends LinearOpMode {
 
     public VisionPortal myVisionPortal;
     public TfodProcessor myTfodProcessor;
-    public boolean USE_WEBCAM;
+ +   public boolean USE_WEBCAM;
     public double proplocation;
     SampleMecanumDrive drive;
     Lift lift = new Lift(this);
@@ -45,7 +45,7 @@ public class RedClose extends LinearOpMode {
         claw.initialize(hardwareMap);
 
         Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
-
++
         while (!isStarted()) {
             proplocation = Tfod_location();
             telemetry.addData("location: ", proplocation);
@@ -60,14 +60,19 @@ public class RedClose extends LinearOpMode {
                 .forward(30)
                 //open one claw here
                 .addTemporalMarker(() -> claw.OpenRight())
-                .waitSeconds(2)
+                .waitSeconds(0.8)
                 // need refining
                 .back(5)
                 .turn(Math.toRadians(90))
                 .back(29)
                 .addTemporalMarker(()-> lift.autoMove(1250,.8))
                 .waitSeconds(1)
-                .addTemporalMarker(()-> wrist.WristUp())
+
+                .addTemporalMarker(()-> Wrist.wrist. setPosition(0))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> claw.OpenLeft())
+                .forward(4.5)
+                .addTemporalMarker(() -> lift.autoMove(1250, 0.65))
+                .strafeLeft(12)
                 //.addTemporalMarker(()-> claw.OpenLeft())
                 //going at add spline later
                 //.waitSeconds(2)
