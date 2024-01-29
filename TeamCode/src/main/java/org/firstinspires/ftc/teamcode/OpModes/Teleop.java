@@ -38,7 +38,7 @@ public class Teleop extends LinearOpMode {
                 arm.loop(gamepad2);
                 wrist.loop(gamepad2);
                 climber.loop(gamepad2);
-                lift.loop(gamepad2);
+                lift.loop(gamepad1);
             }
         }
     }

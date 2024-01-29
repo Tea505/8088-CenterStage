@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,7 +11,7 @@ import org.firstinspires.ftc.teamcode.LibraryFiles.Contraption;
 
 @Config
 public class Lift extends Contraption {
-    DcMotor LeftLift, RightLift;
+    public static DcMotor LeftLift, RightLift;
     public Lift(LinearOpMode opMode) {
         this.opMode = opMode;
     }
@@ -27,16 +25,19 @@ public class Lift extends Contraption {
 
         RightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        RightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void loop(Gamepad gamepad) {
-        if (gamepad.left_stick_y < 0) {
+        if (gamepad.x) {
             // up
-            LeftLift.setPower(1);
-            RightLift.setPower(1);
-        } else if (gamepad.left_stick_y > 0) {
-            // down
             LeftLift.setPower(-1);
+            RightLift.setPower(1);
+        } else if (gamepad.y) {
+            // down
+            LeftLift.setPower(1);
             RightLift.setPower(-1);
         } else {
             LeftLift.setPower(0);

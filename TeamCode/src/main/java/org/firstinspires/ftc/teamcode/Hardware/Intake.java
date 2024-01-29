@@ -13,10 +13,10 @@ import org.firstinspires.ftc.teamcode.LibraryFiles.Contraption;
 @Config
 public class Intake extends Contraption {
 
-    private Servo LeftClaw;
-    private Servo RightClaw;
+    public static Servo LeftClaw;
+    public static Servo RightClaw;
 
-    public static double LEFTCLAW_CLOSE_POS = 0.7;
+    public static double LEFTCLAW_CLOSE_POS = 0.75;
     public static double LEFTCLAW_OPEN_POS = 0.5;
 
     public static double RIGHTCLAW_CLOSE_POS = 0.3;
@@ -50,16 +50,28 @@ public class Intake extends Contraption {
         }
     }
 
-    public void OpenLeft() {
+    public static void OpenLeft() {
         LeftClaw.setPosition(LEFTCLAW_OPEN_POS);
     }
 
-    public void OpenRight() {
+    public static void OpenRight() {
     RightClaw.setPosition(RIGHTCLAW_OPEN_POS);
     }
 
-    public void OpenBoth() {
+    public static void OpenBoth() {
         LeftClaw.setPosition(LEFTCLAW_OPEN_POS);
         RightClaw.setPosition((RIGHTCLAW_OPEN_POS));
+    }
+    public static void closeBoth(){
+        LeftClaw.setPosition(LEFTCLAW_CLOSE_POS);
+        RightClaw.setPosition(RIGHTCLAW_CLOSE_POS);
+    }
+
+    public static void closeLeft() {
+        LeftClaw.setPosition(LEFTCLAW_CLOSE_POS);
+    }
+
+    public static void closeRight() {
+        RightClaw.setPosition(RIGHTCLAW_CLOSE_POS);
     }
 }
