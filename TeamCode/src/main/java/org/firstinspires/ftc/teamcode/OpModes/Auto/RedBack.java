@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpModes;
+package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
 import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.*;
 import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.Side.CENTER;

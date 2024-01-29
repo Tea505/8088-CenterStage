@@ -1,11 +1,10 @@
-package org.firstinspires.ftc.teamcode.OpModes;
+package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
 import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.MaxAccel;
 import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.MaxVel;
-import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.Side.CENTER;
-import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.Side.LEFT;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -13,7 +12,10 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.teamcode.LibraryFiles.Constants;
+import org.firstinspires.ftc.teamcode.Hardware.Arm;
+import org.firstinspires.ftc.teamcode.Hardware.Intake;
+import org.firstinspires.ftc.teamcode.Hardware.Lift;
+import org.firstinspires.ftc.teamcode.Hardware.Wrist;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -21,20 +23,31 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 @Autonomous
-public class BlueClose extends LinearOpMode {
+public class RedClose extends LinearOpMode {
 
     public VisionPortal myVisionPortal;
     public TfodProcessor myTfodProcessor;
-    public boolean USE_WEBCAM;
-    public int scan_loc;
-    public double proplocation;
-    Constants.Side side;
-    SampleMecanumDrive drive;
+    public SampleMecanumDrive drive;
+    public Lift lift = new Lift(this);
+    public Intake claw = new Intake(this);
+    public Wrist wrist = new Wrist(this);
+    public Arm arm = new Arm(this);
 
+    public boolean USE_WEBCAM;
+    public double proplocation;
     @Override
     public void runOpMode() throws InterruptedException {
         USE_WEBCAM = true;
         initTfod();
+
+        drive = new SampleMecanumDrive(hardwareMap);
+        lift.initialize(hardwareMap);
+        claw.initialize(hardwareMap);
+        wrist.initialize(hardwareMap);
+        arm.initialize(hardwareMap);
+
+        Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
+        drive.setPoseEstimate(startPose);
 
         while (!isStarted()) {
             proplocation = Tfod_location();
@@ -42,15 +55,93 @@ public class BlueClose extends LinearOpMode {
             telemetry.update();
         }
 
+        TrajectorySequence Centered = drive.trajectorySequenceBuilder(startPose)
+                .setConstraints(MaxVel, MaxAccel)
+
+                .forward(29)
+                .addTemporalMarker(Intake::OpenLeft)
+                // need refining
+                .back(5)
+                .addTemporalMarker(Intake::closeLeft)
+                .turn(Math.toRadians(90))
+                .back(30)
+
+                .addTemporalMarker(Arm::armup)
+                .back(1)
+                .strafeRight(2.5)
+                .waitSeconds(2)
+                .addTemporalMarker(Intake::OpenBoth)
+                .forward(5)
+                .addTemporalMarker(Arm::armdown)
+
+                .strafeLeft(15)
+
+                .build();
+        TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
+                .setConstraints(MaxVel, MaxAccel)
+
+                .forward(29)
+                .turn(Math.toRadians(90))
+                .forward(4)
+                .addTemporalMarker(Intake::OpenLeft)
+                .back(34)
+                .addTemporalMarker(Intake::closeLeft)
+
+                .strafeRight(2)
+                .addTemporalMarker(Arm::armup)
+                .back(2.5)
+                .waitSeconds(2.2)
+                .addTemporalMarker(Intake::OpenBoth)
+                .forward(5)
+                .addTemporalMarker(Arm::armdown)
+
+                .forward(4)
+                .strafeLeft(20)
+
+                .build();
+
+        TrajectorySequence Right = drive.trajectorySequenceBuilder(startPose)
+                .setConstraints(MaxVel, MaxAccel)
+
+                .splineToConstantHeading(new Vector2d(19.5, -17), Math.toRadians(0))
+                .addTemporalMarker(Intake::OpenLeft)
+                .back(4)
+
+                .turn(Math.toRadians(90))
+                .back(18)
+                .strafeRight(8)
+                .addTemporalMarker(Arm::armup)
+                .back(2.5)
+                .waitSeconds(2.2)
+                .addTemporalMarker(Intake::OpenBoth)
+                .forward(5)
+                .addTemporalMarker(Arm::armdown)
+
+                .forward(4)
+                .strafeLeft(10)
+
+                .build();
+
         waitForStart();
         myVisionPortal.close();
+
+        if (isStopRequested()) return;
+
+        if (proplocation == 2) {
+            drive.followTrajectorySequence(Centered);
+        } else if (proplocation == 1) {
+            drive.followTrajectorySequence(Left);
+        } else {
+            drive.followTrajectorySequence(Right);
+
+        }
     }
 
 
     /**
      * Describe this function...
      */
-    private int Tfod_location() {
+    private double Tfod_location() {
         List<Recognition> myTfodRecognitions;
         Recognition myTfodRecognition;
         float x;
@@ -60,7 +151,7 @@ public class BlueClose extends LinearOpMode {
         myTfodRecognitions = myTfodProcessor.getRecognitions();
         telemetry.addData("# Objects Detected", JavaUtil.listLength(myTfodRecognitions));
         if (JavaUtil.listLength(myTfodRecognitions) == 0) {
-            scan_loc = 3;
+            proplocation = 0;
         } else {
             // Iterate through list and call a function to display info for each recognized object.
             for (Recognition myTfodRecognition_item : myTfodRecognitions) {
@@ -75,14 +166,14 @@ public class BlueClose extends LinearOpMode {
                 y = (myTfodRecognition.getTop() + myTfodRecognition.getBottom()) / 2;
                 // Display the position of the center of the detection boundary for the recognition
                 telemetry.addData("- Position", JavaUtil.formatNumber(x, 0) + ", " + JavaUtil.formatNumber(y, 0));
-                if (x >= 100) {
+                if (x >= 130) {
+                    proplocation = 2;
                     telemetry.addLine("CENTERED");
-                    scan_loc = 1;
-                } else if (x <= 80) {
+                } else if (x <= 130) {
+                    proplocation = 1;
                     telemetry.addLine("LEFT");
-                    scan_loc = 2;
                 } else {
-                    scan_loc = 3;
+                    proplocation = 3;
                 }
                 // Display size
                 // Display the size of detection boundary for the recognition
@@ -90,7 +181,7 @@ public class BlueClose extends LinearOpMode {
             }
 
         }
-        return scan_loc;
+        return proplocation;
     }
 
     private void initTfod() {
@@ -121,64 +212,6 @@ public class BlueClose extends LinearOpMode {
         // Create a VisionPortal by calling build.
         myVisionPortal = myVisionPortalBuilder.build();
 
-        drive = new SampleMecanumDrive(hardwareMap);
-
-        Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
-
-        drive.setPoseEstimate(startPose);
-        // these have not been tested they are just base line
-        TrajectorySequence Centered = drive.trajectorySequenceBuilder(startPose)
-                .setConstraints(MaxVel, MaxAccel)
-
-                .forward(29)
-                //open one claw here
-                .waitSeconds(2)
-                // need refining
-                .back(4)
-                .turn(Math.toRadians(90))
-                .back(18)
-                //going at add spline later
-                .waitSeconds(2)
-                .strafeLeft(20)
-                .build();
-
-        TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
-                .setConstraints(MaxVel, MaxAccel)
-
-                .forward(29)
-                .turn(Math.toRadians(90))
-                .strafeLeft(12)
-                //open one claw here
-                .waitSeconds(2)
-                .back(18)
-                //score thingy here
-                .strafeLeft(10)
-                .build();
-
-        TrajectorySequence Right = drive.trajectorySequenceBuilder(startPose)
-                .setConstraints(MaxVel, MaxAccel)
-
-                .forward(29)
-                .turn(Math.toRadians(-90))
-                //open one Claw here
-                .waitSeconds(2)
-                .back(5)
-                .strafeRight(6)
-                //Going to do spline on actual field for auccarcy
-                .back(18)
-                .waitSeconds(2)
-                .strafeRight(16)
-                //scoring thingy
-                .build();
-
-        if (side == CENTER) {
-            drive.followTrajectorySequence(Centered);
-        } else if (side == LEFT) {
-            drive.followTrajectorySequence(Left);
-        } else {
-            drive.followTrajectorySequence(Right);
-
-        }
 
 
     }

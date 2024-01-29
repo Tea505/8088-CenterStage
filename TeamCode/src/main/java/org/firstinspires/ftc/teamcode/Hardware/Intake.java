@@ -56,6 +56,7 @@ public class Intake extends Contraption {
 
     public static void OpenRight() {
     RightClaw.setPosition(RIGHTCLAW_OPEN_POS);
+    LeftClaw.setPosition(LEFTCLAW_CLOSE_POS);
     }
 
     public static void OpenBoth() {
