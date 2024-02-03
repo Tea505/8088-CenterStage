@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Climber;
 import org.firstinspires.ftc.teamcode.Hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.Hardware.Intake;
 import org.firstinspires.ftc.teamcode.Hardware.Lift;
+import org.firstinspires.ftc.teamcode.Hardware.Shooter;
 import org.firstinspires.ftc.teamcode.Hardware.Wrist;
 
 @TeleOp(name = "8088Teleop2024")
@@ -20,6 +21,7 @@ public class Teleop extends LinearOpMode {
     private Wrist wrist = new Wrist(this);
     private Climber climber = new Climber(this);
      private Lift lift =new Lift(this);
+     private Shooter shooter = new Shooter(this);
     @Override
     public void runOpMode(){
         drivetrain.initialize(hardwareMap);
@@ -28,6 +30,7 @@ public class Teleop extends LinearOpMode {
         wrist.initialize(hardwareMap);
         climber.initialize(hardwareMap);
         lift.initialize(hardwareMap);
+        shooter.initialize(hardwareMap);
 
 
         waitForStart();
@@ -38,7 +41,9 @@ public class Teleop extends LinearOpMode {
                 arm.loop(gamepad2);
                 wrist.loop(gamepad2);
                 climber.loop(gamepad2);
-                lift.loop(gamepad1);
+                lift.loop(gamepad2);
+                shooter.loop(gamepad1);
+                intake.loop2(gamepad1);
             }
         }
     }

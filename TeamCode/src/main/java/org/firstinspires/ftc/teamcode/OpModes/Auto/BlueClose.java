@@ -2,8 +2,7 @@ package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
 import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.MaxAccel;
 import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.MaxVel;
-import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.Side.CENTER;
-import static org.firstinspires.ftc.teamcode.LibraryFiles.Constants.Side.LEFT;
+
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -18,7 +17,6 @@ import org.firstinspires.ftc.teamcode.Hardware.Arm;
 import org.firstinspires.ftc.teamcode.Hardware.Intake;
 import org.firstinspires.ftc.teamcode.Hardware.Lift;
 import org.firstinspires.ftc.teamcode.Hardware.Wrist;
-import org.firstinspires.ftc.teamcode.LibraryFiles.Constants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -61,6 +59,7 @@ public class BlueClose extends LinearOpMode {
         TrajectorySequence Centered = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
+                .addTemporalMarker(Intake::closeBoth)
                 .forward(29)
                 .addTemporalMarker(Intake::OpenLeft)
                 // need refining
@@ -82,6 +81,7 @@ public class BlueClose extends LinearOpMode {
         TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
+                .addTemporalMarker(Intake::closeBoth)
                 .splineToConstantHeading(new Vector2d(19.5,15.5), Math.toRadians(90))
                 .addTemporalMarker(Intake::OpenLeft)
                 .back(4)
@@ -101,6 +101,7 @@ public class BlueClose extends LinearOpMode {
         TrajectorySequence Right = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
+                .addTemporalMarker(Intake::closeBoth)
                 .forward(31)
                 .turn(Math.toRadians(-90))
                 .forward(4)

@@ -32,8 +32,8 @@ public class Intake extends Contraption {
         LeftClaw = hwMap.get(Servo.class, "LeftClaw");
         RightClaw = hwMap.get(Servo.class, "RightClaw");
 
-        LeftClaw.setPosition(LEFTCLAW_CLOSE_POS);
-        RightClaw.setPosition(RIGHTCLAW_CLOSE_POS);
+        //LeftClaw.setPosition(LEFTCLAW_CLOSE_POS);
+        //RightClaw.setPosition(RIGHTCLAW_CLOSE_POS);
 
     }
 
@@ -43,6 +43,8 @@ public class Intake extends Contraption {
             LeftClaw.setPosition(0.7);
             RightClaw.setPosition(0.3);
         }
+    }
+    public void loop2(Gamepad gamepad){
         if (gamepad.right_trigger > 0) {
             // open
             LeftClaw.setPosition(0.5);

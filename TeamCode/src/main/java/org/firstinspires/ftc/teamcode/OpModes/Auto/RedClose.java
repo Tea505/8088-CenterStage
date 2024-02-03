@@ -58,6 +58,7 @@ public class RedClose extends LinearOpMode {
         TrajectorySequence Centered = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
+                .addTemporalMarker(Intake::closeBoth)
                 .forward(29)
                 .addTemporalMarker(Intake::OpenLeft)
                 // need refining
@@ -80,6 +81,7 @@ public class RedClose extends LinearOpMode {
         TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
+                .addTemporalMarker(Intake::closeBoth)
                 .forward(29)
                 .turn(Math.toRadians(90))
                 .forward(4)
@@ -103,6 +105,7 @@ public class RedClose extends LinearOpMode {
         TrajectorySequence Right = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
+                .addTemporalMarker(Intake::closeBoth)
                 .splineToConstantHeading(new Vector2d(19.5, -17), Math.toRadians(0))
                 .addTemporalMarker(Intake::OpenLeft)
                 .back(4)
