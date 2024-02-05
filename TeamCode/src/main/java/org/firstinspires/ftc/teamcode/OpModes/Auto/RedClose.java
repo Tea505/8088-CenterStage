@@ -46,6 +46,7 @@ public class RedClose extends LinearOpMode {
         wrist.initialize(hardwareMap);
         arm.initialize(hardwareMap);
 
+
         Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
         drive.setPoseEstimate(startPose);
 
@@ -55,6 +56,24 @@ public class RedClose extends LinearOpMode {
             telemetry.update();
         }
 
+        Intake.LeftClaw.setPosition(Intake.LEFTCLAW_CLOSE_POS);
+        Intake.RightClaw.setPosition(Intake.RIGHTCLAW_CLOSE_POS);
+
+        TrajectorySequence Centered = drive.trajectorySequenceBuilder(startPose)
+                .setConstraints(MaxVel, MaxAccel)
+
+                .lineTo(new Vector2d(29, 0))
+                .addTemporalMarker(Intake::OpenLeft)
+
+                .setReversed(true)
+                .addTemporalMarker(Arm::armup)
+                .splineToSplineHeading(new Pose2d(30, -36, Math.toRadians(90)), Math.toRadians(0))
+
+                .waitSeconds(5)
+
+                .build();
+
+        /*
         TrajectorySequence Centered = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
@@ -78,6 +97,9 @@ public class RedClose extends LinearOpMode {
                 .strafeLeft(15)
 
                 .build();
+
+
+         */
         TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
