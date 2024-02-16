@@ -16,7 +16,7 @@ public class Shooter extends Contraption {
     }
     @Override
     public void initialize(HardwareMap hwMap) {
-        Shooter = hwMap.get(Servo.class, "SHOOTER");
+        Shooter = hwMap.get(Servo.class, "Trigger");
     }
     public void loop(Gamepad gamepad) {
         while(gamepad.dpad_up){

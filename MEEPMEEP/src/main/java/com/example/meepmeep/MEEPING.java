@@ -15,13 +15,21 @@ public class MEEPING {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
+                                .lineTo(new Vector2d(29, 0))
 
-                                .lineTo(new Vector2d(30, 0))
+                        .setReversed(true)
+                                .splineTo(new Vector2d(30, -36), Math.toRadians(-90))
+                        //.splineToLinearHeading(new Pose2d(30, -36), Math.toRadians(0))
+                                .lineTo(new Vector2d(30, -26))
+                                .splineToLinearHeading(new Pose2d(30, -18, Math.toRadians(90)), Math.toRadians(-90))
+                        .lineTo(new Vector2d(30, 56))
 
-                                .setReversed(true)
-                                .splineTo(new Vector2d(30, -30), Math.toRadians(180))
-
-                                .waitSeconds(5)
+                        .waitSeconds(1)
+                        .strafeLeft(3)
+                        .forward(3)
+                        .lineTo(new Vector2d(30,-36))
+                        .back(5)
+                        .strafeLeft(20)
 
                                 .build()
                 );

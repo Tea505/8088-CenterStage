@@ -68,9 +68,20 @@ public class RedClose extends LinearOpMode {
                 .setReversed(true)
                 .addTemporalMarker(Arm::armup)
                 .splineToSplineHeading(new Pose2d(30, -36, Math.toRadians(90)), Math.toRadians(0))
-
-                .waitSeconds(5)
-
+                .addTemporalMarker(Intake::OpenBoth)
+                .waitSeconds(.2)
+                .addTemporalMarker(Arm::armdown)
+                .lineTo(new Vector2d(-30, -36))
+                .turn(Math.toRadians(180))
+                .waitSeconds(1)
+                .strafeLeft(3)
+                .forward(3)
+                .addTemporalMarker(Intake::closeBoth)
+                .lineTo(new Vector2d(20,-36))
+                .addTemporalMarker(Arm::armup)
+                .addTemporalMarker(Intake::OpenBoth)
+                .back(5)
+                .strafeLeft(10)
                 .build();
 
         /*

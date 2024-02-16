@@ -16,7 +16,7 @@ public class Wrist extends Contraption {
     public static Servo Wrist;
     public static double WRIST_UP = 0.0;
 
-    public static double WRIST_DOWN = 0.8;
+    public static double WRIST_DOWN = 0.68;
     public Wrist(LinearOpMode opMode) {
         this.opMode = opMode;
     }

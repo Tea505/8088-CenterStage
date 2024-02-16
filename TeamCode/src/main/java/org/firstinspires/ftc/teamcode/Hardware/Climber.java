@@ -20,16 +20,15 @@ public class Climber extends Contraption {
 
     @Override
     public void initialize(HardwareMap hwMap) {
-        RightClimber = hwMap.get(DcMotorEx.class, "RightClimber");
-        LeftClimber = hwMap.get(DcMotorEx.class, "LeftClimber");
-        RightClimber.setDirection(DcMotor.Direction.REVERSE);
+        RightClimber = hwMap.get(DcMotorEx.class, "ClimbR");
+        LeftClimber = hwMap.get(DcMotorEx.class, "ClimbL");
     }
 
     public void loop(Gamepad gamepad) {
-        if (gamepad.dpad_up) {
+        if (gamepad.right_stick_y>0) {
             LeftClimber.setPower(1);
             RightClimber.setPower(1);
-        } else if (gamepad.dpad_down) {
+        } else if (gamepad.right_stick_y<0) {
             LeftClimber.setPower(-1);
             RightClimber.setPower(-1);
         } else {

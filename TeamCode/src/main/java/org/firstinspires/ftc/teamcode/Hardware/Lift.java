@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -28,6 +29,9 @@ public class Lift extends Contraption {
 
         RightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LeftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        RightLift.setDirection(DcMotorSimple.Direction.REVERSE);
+        LeftLift.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void loop(Gamepad gamepad) {

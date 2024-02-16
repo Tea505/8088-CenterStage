@@ -40,15 +40,15 @@ public class Intake extends Contraption {
     public void loop(Gamepad gamepad) {
         if (gamepad.left_trigger > 0) {
             // close
-            LeftClaw.setPosition(0.7);
-            RightClaw.setPosition(0.3);
+            LeftClaw.setPosition(0.5);
+            RightClaw.setPosition(0.5);
         }
     }
     public void loop2(Gamepad gamepad){
         if (gamepad.right_trigger > 0) {
             // open
-            LeftClaw.setPosition(0.5);
-            RightClaw.setPosition(0.5);
+            LeftClaw.setPosition(0.3);
+            RightClaw.setPosition(0.7);
         }
     }
 
