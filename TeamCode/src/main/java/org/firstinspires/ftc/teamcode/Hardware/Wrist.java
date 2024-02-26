@@ -16,7 +16,7 @@ public class Wrist extends Contraption {
     public static Servo Wrist;
     public static double WRIST_UP = 0.0;
 
-    public static double WRIST_DOWN = 0.68;
+    public static double WRIST_DOWN = 0.75;
     public Wrist(LinearOpMode opMode) {
         this.opMode = opMode;
     }
@@ -27,14 +27,12 @@ public class Wrist extends Contraption {
     }
 
     public void loop(Gamepad gamepad) {
-        if (gamepad.y) {
+        if (gamepad.x) {
             // up
             Wrist.setPosition(WRIST_UP);
-        } else if (gamepad.a) {
+        } else if (gamepad.b) {
             // down
             Wrist.setPosition(WRIST_DOWN);
-        } else if (gamepad.x) {
-            Wrist.setPosition(0.15);
         }
     }
     public static void WristUp() {

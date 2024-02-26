@@ -34,12 +34,12 @@ public class Arm extends Contraption {
     public void loop(Gamepad gamepad) {
         if (gamepad.left_bumper) {
             // up
-            LeftArm.setPosition(0);
-            RightArm.setPosition(0.7);
+            LeftArm.setPosition(0.7);
+            RightArm.setPosition(0);
         } else if (gamepad.right_bumper) {
             // down
-            LeftArm.setPosition(.7);
-            RightArm.setPosition(0);
+            LeftArm.setPosition(0);
+            RightArm.setPosition(0.7);
         }
     }
 

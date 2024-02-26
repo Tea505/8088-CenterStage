@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class DriveTrain extends Contraption {
 
     public SampleMecanumDrive drive;
-    public double powerMultiplier = 1;
+    public double powerMultiplier = .6;
     public DriveTrain(LinearOpMode opMode) {
         this.opMode = opMode;
     }

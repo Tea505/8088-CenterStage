@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.checkerframework.framework.qual.PolyAll;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -42,6 +43,7 @@ public class RedClose extends LinearOpMode {
 
         drive = new SampleMecanumDrive(hardwareMap);
         lift.initialize(hardwareMap);
+        lift.autoinit();
         claw.initialize(hardwareMap);
         wrist.initialize(hardwareMap);
         arm.initialize(hardwareMap);
@@ -62,26 +64,26 @@ public class RedClose extends LinearOpMode {
         TrajectorySequence Centered = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
-                .lineTo(new Vector2d(29, 0))
-                .addTemporalMarker(Intake::OpenLeft)
+                .addTemporalMarker(Intake::closeBoth)
+                .lineTo(new Vector2d(28.5, 0))
+                .addTemporalMarker(Intake::OpenRight)
+                .waitSeconds(.8)
 
                 .setReversed(true)
-                .addTemporalMarker(Arm::armup)
-                .splineToSplineHeading(new Pose2d(30, -36, Math.toRadians(90)), Math.toRadians(0))
-                .addTemporalMarker(Intake::OpenBoth)
-                .waitSeconds(.2)
-                .addTemporalMarker(Arm::armdown)
-                .lineTo(new Vector2d(-30, -36))
-                .turn(Math.toRadians(180))
-                .waitSeconds(1)
-                .strafeLeft(3)
-                .forward(3)
+                .splineTo(new Vector2d(25, -34), Math.toRadians(-90))
+                .back(7)
                 .addTemporalMarker(Intake::closeBoth)
-                .lineTo(new Vector2d(20,-36))
+                .waitSeconds(.5)
+                .addTemporalMarker(Wrist::WristUp)
+                .waitSeconds(.5)
                 .addTemporalMarker(Arm::armup)
+                .waitSeconds(1)
                 .addTemporalMarker(Intake::OpenBoth)
-                .back(5)
-                .strafeLeft(10)
+                .forward(3)
+                .addTemporalMarker(Arm::armdown)
+                .waitSeconds(.5)
+                .strafeLeft(25)
+
                 .build();
 
         /*
@@ -115,23 +117,23 @@ public class RedClose extends LinearOpMode {
                 .setConstraints(MaxVel, MaxAccel)
 
                 .addTemporalMarker(Intake::closeBoth)
-                .forward(29)
-                .turn(Math.toRadians(90))
+                .lineToSplineHeading(new Pose2d(38,0, Math.toRadians(90)))
                 .forward(4)
                 .addTemporalMarker(Intake::OpenLeft)
-                .back(34)
-                .addTemporalMarker(Intake::closeLeft)
-
-                .strafeRight(2)
+                .setReversed(true)
+                .splineTo(new Vector2d(37, -36), Math.toRadians(-90))
+                .addTemporalMarker(Wrist::WristUp)
+                .waitSeconds(.6)
                 .addTemporalMarker(Arm::armup)
-                .back(2.5)
-                .waitSeconds(2.2)
+                .waitSeconds(2)
                 .addTemporalMarker(Intake::OpenBoth)
+                .waitSeconds(.9)
                 .forward(5)
+                .waitSeconds(.6)
                 .addTemporalMarker(Arm::armdown)
+                .waitSeconds(.7)
+                .strafeLeft(25)
 
-                .forward(4)
-                .strafeLeft(20)
 
                 .build();
 
@@ -141,25 +143,24 @@ public class RedClose extends LinearOpMode {
                 .addTemporalMarker(Intake::closeBoth)
                 .splineToConstantHeading(new Vector2d(19.5, -17), Math.toRadians(0))
                 .addTemporalMarker(Intake::OpenLeft)
+                .waitSeconds(1)
                 .back(4)
-
-                .turn(Math.toRadians(90))
-                .back(18)
-                .strafeRight(8)
+                .setReversed(true)
+                .splineTo(new Vector2d(20, -36.5), Math.toRadians(-90))
+                .addTemporalMarker(Wrist::WristUp)
+                .waitSeconds(1.5)
                 .addTemporalMarker(Arm::armup)
-                .back(2.5)
-                .waitSeconds(2.2)
+                .waitSeconds(1.2)
                 .addTemporalMarker(Intake::OpenBoth)
-                .forward(5)
+                .forward(4)
                 .addTemporalMarker(Arm::armdown)
 
-                .forward(4)
-                .strafeLeft(10)
+                //.forward(4)
+                .strafeLeft(20)
 
                 .build();
 
         waitForStart();
-        myVisionPortal.close();
 
         if (isStopRequested()) return;
 

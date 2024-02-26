@@ -129,10 +129,10 @@ public class SampleMecanumDrive extends MecanumDrive {
        // rightRear.setDirection(DcMotorSimple.Direction.FORWARD); // REVERSE
        // rightFront.setDirection(DcMotorSimple.Direction.REVERSE); // FORWARD
 
-        leftRear.setDirection(DcMotor.Direction.REVERSE);
-        leftFront.setDirection(DcMotor.Direction.FORWARD);
-        rightRear.setDirection(DcMotor.Direction.FORWARD);
-        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        leftRear.setDirection(DcMotor.Direction.FORWARD);
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        rightRear.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.FORWARD);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

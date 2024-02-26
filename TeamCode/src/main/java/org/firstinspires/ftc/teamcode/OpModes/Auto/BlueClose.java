@@ -60,38 +60,47 @@ public class BlueClose extends LinearOpMode {
                 .setConstraints(MaxVel, MaxAccel)
 
                 .addTemporalMarker(Intake::closeBoth)
-                .forward(29)
+                .waitSeconds(.5)
+                .lineTo(new Vector2d(29,0))
                 .addTemporalMarker(Intake::OpenLeft)
-                // need refining
                 .back(5)
                 .addTemporalMarker(Intake::closeLeft)
-                .turn(Math.toRadians(-90))
-                .back(30)
+                .setReversed(true)
+                .splineTo(new Vector2d(28, 35.5), Math.toRadians(90))
+                .addTemporalMarker(Wrist::WristUp)
+                .waitSeconds(1)
                 .addTemporalMarker(Arm::armup)
-                .back(1)
-                .strafeLeft(6)
-                .waitSeconds(2)
+                .waitSeconds(1.5)
+                .addTemporalMarker(Intake::OpenBoth)
+                .waitSeconds(1)
+                .addTemporalMarker(Arm::armdown)
+                .forward(5)
+                .strafeRight(20)
+                .addTemporalMarker(Intake::closeBoth)
+                /*.waitSeconds(2)
                 .addTemporalMarker(Intake::OpenBoth)
                 .forward(2.5)
                 .addTemporalMarker(Arm::armdown)
                 .addTemporalMarker(Intake::closeBoth)
-                .strafeRight(15)
+                .strafeRight(15)*/
 
                 .build();
         TrajectorySequence Left = drive.trajectorySequenceBuilder(startPose)
                 .setConstraints(MaxVel, MaxAccel)
 
                 .addTemporalMarker(Intake::closeBoth)
-                .splineToConstantHeading(new Vector2d(19.5,15.5), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(20,16), Math.toRadians(90))
                 .addTemporalMarker(Intake::OpenLeft)
                 .back(4)
-                .turn(Math.toRadians(-90))
+                .splineTo(new Vector2d(22, 40.5), Math.toRadians(90))
                 .addTemporalMarker(Intake::closeBoth)
-                .back(20)
-                .strafeLeft(11)
+                .waitSeconds(.8)
+                .addTemporalMarker(Wrist::WristUp)
+                .waitSeconds(1)
                 .addTemporalMarker(Arm::armup)
-                .waitSeconds(2)
+                .waitSeconds(.8)
                 .addTemporalMarker(Intake::OpenBoth)
+                .waitSeconds(1)
                 .forward(4.5)
                 .addTemporalMarker(Arm::armdown)
                 .addTemporalMarker(Intake::closeBoth)
@@ -102,21 +111,22 @@ public class BlueClose extends LinearOpMode {
                 .setConstraints(MaxVel, MaxAccel)
 
                 .addTemporalMarker(Intake::closeBoth)
-                .forward(31)
-                .turn(Math.toRadians(-90))
-                .forward(4)
+                .splineTo(new Vector2d(33, 0), Math.toRadians(-90))
+                .forward(6)
                 .addTemporalMarker(Intake::OpenRight)
-                .back(34.5)
+                .setReversed(true)
+                .lineTo(new Vector2d(35, 33.5))
                 .addTemporalMarker(Intake::closeBoth)
+                .waitSeconds(.6)
                 .addTemporalMarker(Arm::armup)
                 .waitSeconds(0.7)
-                .addTemporalMarker(Wrist::Wristdown)
+                .addTemporalMarker(Wrist::WristUp)
                 .waitSeconds(1.8)
                 .addTemporalMarker(Intake::OpenBoth)
                 .waitSeconds(0.5)
                 .forward(4)
                 .addTemporalMarker(Arm::armdown)
-                .addTemporalMarker(Wrist::WristUp)
+                .addTemporalMarker(Wrist::Wristdown  )
                 .addTemporalMarker(Intake::closeBoth)
                 .strafeRight(18)
                 .build();
@@ -190,9 +200,9 @@ public class BlueClose extends LinearOpMode {
         // First, create a TfodProcessor.Builder.
         myTfodProcessorBuilder = new TfodProcessor.Builder();
         // Set the name of the file where the model can be found.
-        myTfodProcessorBuilder.setModelFileName("8088_red_model_metadata.tflite");
+        myTfodProcessorBuilder.setModelFileName("8088-blue.tflite");
         // Set the full ordered list of labels the model is trained to recognize.
-        myTfodProcessorBuilder.setModelLabels(JavaUtil.createListWith("None", "Red Prop"));
+        myTfodProcessorBuilder.setModelLabels(JavaUtil.createListWith("None", "Blue Prop"));
         // Set the aspect ratio for the images used when the model was created.
         myTfodProcessorBuilder.setModelAspectRatio(16 / 9);
         // Create a TfodProcessor by calling build.
