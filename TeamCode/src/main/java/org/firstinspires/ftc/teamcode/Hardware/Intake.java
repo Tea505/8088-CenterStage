@@ -22,6 +22,7 @@ public class Intake extends Contraption {
     public static double RIGHTCLAW_CLOSE_POS = 0.3;
     public static double RIGHTCLAW_OPEN_POS = 0.5;
 
+
     public Intake(LinearOpMode opMode) {
         this.opMode = opMode;
     }
@@ -40,7 +41,7 @@ public class Intake extends Contraption {
     public void loop(Gamepad gamepad) {
         if (gamepad.left_trigger > 0) {
             // close
-            RightClaw.setPosition(.3);
+            RightClaw.setPosition(.35);
         }else if (gamepad.left_bumper)
             RightClaw.setPosition(0.5);
         }
@@ -48,7 +49,7 @@ public class Intake extends Contraption {
     public void loop2(Gamepad gamepad){
         if (gamepad.right_trigger>0) {
             // open
-            LeftClaw.setPosition(0.7);
+            LeftClaw.setPosition(0.75);
         }else if(gamepad.right_bumper)
             LeftClaw.setPosition(0.5);
         }

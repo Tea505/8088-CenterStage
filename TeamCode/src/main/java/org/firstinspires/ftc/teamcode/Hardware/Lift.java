@@ -44,15 +44,17 @@ public class Lift extends Contraption {
     public void loop(Gamepad gamepad) {
         if (gamepad.left_stick_y>0 && !HighLimit.isPressed()) {
             // up
-            LeftLift.setPower(.8);
-            RightLift.setPower(.8);
+            LeftLift.setPower(-.4);
+            RightLift.setPower(-.4);
         } else if (gamepad.left_stick_y<0 && !LowLimit.isPressed()) {
             // down
-            LeftLift.setPower(-.60);
-            RightLift.setPower(-.60);
+            LeftLift.setPower(1);
+            RightLift.setPower(1);
         } else {
             LeftLift.setPower(0);
             RightLift.setPower(0);
+
+            
         }
 
 

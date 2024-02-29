@@ -6,7 +6,7 @@ This repository contains the public FTC SDK for the CENTERSTAGE (2023-2024) comp
 
 # 8088-CenterStage
 
-Official code for Team 8088 The Cephalopods for CenterStage written by Tea
+Official code for Team 8088 The Cephalopods for CenterStage written by Afreen
 
 ## Installation
 

@@ -33,6 +33,8 @@ public class Wrist extends Contraption {
         } else if (gamepad.b) {
             // down
             Wrist.setPosition(WRIST_DOWN);
+        }else if (gamepad.a){
+            Wrist.setPosition(.6);
         }
     }
     public static void WristUp() {

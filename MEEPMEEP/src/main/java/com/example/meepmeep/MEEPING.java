@@ -15,9 +15,10 @@ public class MEEPING {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
-                                .lineToSplineHeading(new Pose2d(38,0, Math.toRadians(90)))
+                                .lineTo(new Vector2d(29,0))
                                 .setReversed(true)
-                                .splineTo(new Vector2d(37, -34), Math.toRadians(-90))
+                                .lineToSplineHeading(new Pose2d(29,-24, Math.toRadians(-90)))
+                                .splineTo(new Vector2d(56,60),Math.toRadians(-90))
                                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
